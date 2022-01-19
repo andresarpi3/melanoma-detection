@@ -1,0 +1,6 @@
+data/
+.vscode/
+.ipynb_checkpoints/
+models/
+models.tar.gz
+**/*.tar.gz

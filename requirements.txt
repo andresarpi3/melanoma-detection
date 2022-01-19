@@ -1,0 +1,5 @@
+# Python 3.7.10
+tensorflow==2.4.3
+torch
+torchvision
+pandas
