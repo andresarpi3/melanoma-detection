@@ -3,3 +3,5 @@ tensorflow==2.4.3
 torch
 torchvision
 pandas
+scipy
+boto3

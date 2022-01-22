@@ -5,3 +5,4 @@ models/
 models.tar.gz
 **/*.tar.gz
 **/__pycache__/
+.DS_Store
