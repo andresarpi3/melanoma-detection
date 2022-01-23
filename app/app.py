@@ -5,6 +5,11 @@ import boto3
 import tensorflow as tf
 import os
 from model import MyModel
+import logging
+
+logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
+
+
 
 s3 = boto3.client('s3')
 
@@ -47,17 +52,19 @@ def print_credentials():
 def _handler(event: typing.Dict, context):
     global cached_model
 
-    print("\nEvent:", str(event), '\n')
+    logging.debug("\nEvent:", str(event), '\n')
 
-    image_key = event['image_key']
-    age = float(event['age'])
-    sex = event['sex']
-    location = event['location']
+    image_key = event['queryStringParameters']['image_key']
+    age = float(event['queryStringParameters']['age'])
+    sex = event['queryStringParameters']['sex']
+    location = event['queryStringParameters']['location']
 
     image_tensor = download_load_and_delete_image(image_key)
 
     if cached_model is None:
+        logging.info("Model no in cache. Loading...")
         cached_model = MyModel.create_standard_version("./weights/")
+        logging.info("Model loaded.")
 
     prediction = cached_model.predict_single_image(
         image=image_tensor, sex=sex, age=age, location=location)
@@ -79,12 +86,13 @@ def handler(event: typing.Dict, context):
         }
 
     except Exception as e:
-        print(e)
+        logger.error(f"Event: {str(event)} - error: {str(e)}")
         return {
             'statusCode': 500,
             'body': json.dumps(
                 {
                     "error": str(e),
+                    "event": str(event)
                 }
             )
         }
@@ -92,10 +100,12 @@ def handler(event: typing.Dict, context):
 
 if __name__ == "__main__":
     event = {
-        "image_key": "input_images/test.jpg",
-        "age": "45",
-        "sex": "male",
-        "location": "torso"
+    "queryStringParameters": {
+          "image_key": "input_images/test.jpg",
+          "age": "45",
+          "sex": "male",
+          "location": "torso"
+       }
     }
 
     handler(event, None)
