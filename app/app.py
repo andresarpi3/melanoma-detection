@@ -86,7 +86,7 @@ def handler(event: typing.Dict, context):
         }
 
     except Exception as e:
-        logger.error(f"Event: {str(event)} - error: {str(e)}")
+        logging.error(f"Event: {str(event)} - error: {str(e)}")
         return {
             'statusCode': 500,
             'body': json.dumps(
