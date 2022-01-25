@@ -75,9 +75,13 @@ def handler(event: typing.Dict, context):
     try:
         # print_credentials()
         pred = _handler(event, context)
+
         return {
             'statusCode': 200,
-            'Access-Control-Allow-Origin': '*',
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
             'body': json.dumps(
                 {
                     "predicted_label": pred,
@@ -89,7 +93,10 @@ def handler(event: typing.Dict, context):
         logging.error(f"Event: {str(event)} - error: {str(e)}")
         return {
             'statusCode': 500,
-            'Access-Control-Allow-Origin': '*',
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
 
             'body': json.dumps(
                 {
