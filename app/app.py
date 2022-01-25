@@ -10,7 +10,6 @@ import logging
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 
 
-
 s3 = boto3.client('s3')
 
 BUCKET = 'melanoma-classification'
@@ -78,6 +77,7 @@ def handler(event: typing.Dict, context):
         pred = _handler(event, context)
         return {
             'statusCode': 200,
+            'Access-Control-Allow-Origin': '*',
             'body': json.dumps(
                 {
                     "predicted_label": pred,
@@ -89,6 +89,8 @@ def handler(event: typing.Dict, context):
         logging.error(f"Event: {str(event)} - error: {str(e)}")
         return {
             'statusCode': 500,
+            'Access-Control-Allow-Origin': '*',
+
             'body': json.dumps(
                 {
                     "error": str(e),
@@ -100,12 +102,12 @@ def handler(event: typing.Dict, context):
 
 if __name__ == "__main__":
     event = {
-    "queryStringParameters": {
-          "image_key": "input_images/test.jpg",
-          "age": "45",
-          "sex": "male",
-          "location": "torso"
-       }
+        "queryStringParameters": {
+            "image_key": "input_images/test.jpg",
+            "age": "45",
+            "sex": "male",
+            "location": "torso"
+        }
     }
 
     handler(event, None)
