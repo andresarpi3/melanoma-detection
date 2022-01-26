@@ -69,10 +69,10 @@ function buildParams(filekey) {
 }
 
 function getColorAndAlert(percentile){
-    if (percentile < 60){
+    if (percentile < 75){
         return {"class": "alert alert-success", "text": "You are at a low risk seeting. You should see a doctor if you \
          have any other reason that might present risks (family history, pain, physical ailments, etc)."}
-    } else if (percentile < 61){
+    } else if (percentile < 95){
         return {"class": "alert alert-warning", "text": "You are at a medium risk setting. You should consider seeing a \
         doctor and with urgency if you present other risks (family history, pain, physical ailments, etc)."}
     } else {
@@ -102,7 +102,16 @@ function handleReturnFromApiCall(data) {
 
 }
 
+function handleFailureApi(data){
+    console.log(data);
+    document.getElementById("error-api").hidden = false;
+
+    document.getElementById("loading").hidden = true;
+    document.getElementById("results-container").hidden = true
+}
+
 function handleFileUploaded(filekey) {
+    console.log("File uploaded succesfully: " + filekey );
     let params = buildParams(filekey);
 
     let endpoint = myEndpoint + params;
@@ -119,7 +128,7 @@ function handleFileUploaded(filekey) {
         
         
     r.catch((err) => {
-            console.log("error ", err);
+            handleFailureApi(err)
         });
 }
 
@@ -146,13 +155,16 @@ function uploadFile() {
             handleFileUploaded(photoKey)
         },
         function (err) {
-            return alert("There was an error uploading your photo: ", err.message);
+            handleFailureApi(err);
         }
     );
 
 }
 
 function handleSubmit() {
+
+    document.getElementById("error-api").hidden = true
+
     let error = performValidations();
     if (error > 0) {
         return;
@@ -202,6 +214,8 @@ function scheduleWarmUp(data){
 }
 
 function warmUp(){
+
+    console.log("Running warmup...")
     p = fetch(fullEndpoint, {
         method: "GET"
     })
@@ -209,13 +223,17 @@ function warmUp(){
 
     x = p.then((response) => {
         return response.json();
-    }).then
+    }).then((data) =>{
+        console.log("Warmup succesful");
+        return data
+    })
 
 
     x = p.catch((response) => {
-        return response.json();
+        console.log("Problem with warmup: " + response.json());
     })
 
     x.then((data) => scheduleWarmUp(data));
-
 }
+
+warmUp()

@@ -11,12 +11,14 @@
         integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 
     <style>
-        .row {
+        .section {
             margin-bottom: 6%;
         }
+
         .faq-row {
             margin-bottom: 2%;
         }
+
         #form-input {
             margin-bottom: 6%;
         }
@@ -47,7 +49,7 @@
         </h1>
 
 
-        <div id="motivation">
+        <div id="motivation" class='section'>
             <h2>Motivation</h2>
 
             <div class="row">
@@ -99,102 +101,119 @@
 
         </div>
 
-        <div id="form-input">
 
-            <h2>Get your results</h2>
+        <div class="border section" id="app" style=" padding: 20px;margin-bottom: 20px;">
 
-            <div class="alert alert-primary" role="alert">
-                We only use the information to make a prediction. Once the prediction is done we delete everything.
-            </div>
+            <div id="form-input">
 
-            <form name='form' onsubmit="return handleSubmit()">
+                <h2>Get your results</h2>
 
-                <div class="form-row">
-
-                    <div class="form-group col-lg-3">
-                        <label for="ageInput">Age</label>
-                        <input type="number" class="form-control" id="ageInput" aria-describedby="Enter your age"
-                            placeholder="Enter your age">
-                    </div>
-
-                    <div class="form-group col-lg-3">
-                        <label for="sexInput">Sex</label>
-                        <select class="form-control" id="sexInput" required>
-                            <option selected>choose...</option>
-                            <option>male</option>
-                            <option>female</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-lg-3">
-                        <label for="location">Lesion Location</label>
-                        <select class="form-control" id="location" required>
-                            <option selected>choose...</option>
-                            <option>head/neck</option>
-                            <option>lower extremity</option>
-                            <option>oral/genital</option>
-                            <option>palms/soles</option>
-                            <option>torso</option>
-                            <option>upper extremity</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-lg-3">
-                        <label for="formFile" class="form-label">Upload image</label>
-                        <input class="form-control" type="file" id="formFile">
-                    </div>
-
+                <div class="alert alert-primary" role="alert">
+                    We only use the information to make a prediction. Once the prediction is done we delete everything.
                 </div>
 
-                <button class="btn btn-primary" type="button" onclick="handleSubmit()">Submit</button>
+                <form name='form' onsubmit="return handleSubmit()">
 
-            </form>
+                    <div class="form-row">
 
-        </div>
+                        <div class="form-group col-lg-3">
+                            <label for="ageInput">Age</label>
+                            <input type="number" class="form-control" id="ageInput" aria-describedby="Enter your age"
+                                placeholder="Enter your age">
+                        </div>
 
-        <div id="loading" hidden="true">
+                        <div class="form-group col-lg-3">
+                            <label for="sexInput">Sex</label>
+                            <select class="form-control" id="sexInput" required>
+                                <option selected>choose...</option>
+                                <option>male</option>
+                                <option>female</option>
+                            </select>
+                        </div>
 
-            <div class="row" style="margin-bottom: 0px; margin-top: -20px;">
-                <div class="col-lg-12">
-                    <div class="alert alert-primary" role="alert">
-                        Your image is being uploaded and processed. Please wait a few seconds...
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="sr-only">Loading...</span>
+                        <div class="form-group col-lg-3">
+                            <label for="location">Lesion Location</label>
+                            <select class="form-control" id="location" required>
+                                <option selected>choose...</option>
+                                <option>head/neck</option>
+                                <option>lower extremity</option>
+                                <option>oral/genital</option>
+                                <option>palms/soles</option>
+                                <option>torso</option>
+                                <option>upper extremity</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-lg-3">
+                            <label for="formFile" class="form-label">Upload image</label>
+                            <input class="form-control" type="file" id="formFile">
+                        </div>
+
+                    </div>
+
+                    <button class="btn btn-primary" type="button" onclick="handleSubmit()">Submit</button>
+
+                </form>
+
+            </div>
+
+            <div id="loading" hidden="true">
+
+                <div class="row" style="margin-bottom: 0px; margin-top: -20px;">
+                    <div class="col-lg-12">
+                        <div class="alert alert-primary" role="alert">
+                            Your image is being uploaded and processed. Please wait a few seconds...
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+            <div id="error-api" hidden="true">
 
-        <div id="results-container" hidden="true">
+                <div class="row" style="margin-bottom: 0px; margin-top: -20px;">
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger" role="alert">
+                            It seems that we are having issues on our side. Please try again later. 
 
-            <h2>Results</h2>
-            <div class="row">
-
-                <div class="col-lg-9">
-                    <div class="alert alert-primary" role="alert" id="result-alert">
-                        The image analyzed has a <span id="score">null</span>% probability of being malignant. This puts
-                        you in the <span class="percentile">null</span> th percentile, meaning <span class="percentile">
-                            null</span>% of images analyzed had a lower chance of being malignant.
-                        <span id="advice" class="font-weight-bold"> You should go to the doctor inmediately. </span>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-lg-3">
-                    <center>
-                        <figure class="figure" style>
-                            <img class="img-fluid rounded float-right" id="user-image">
-                            <figcaption class="figure-caption">Uploaded image.</figcaption>
-                        </figure>
-                    </center>
+
+            <div id="results-container" hidden="true">
+
+                <h2>Results</h2>
+                <div class="row">
+
+                    <div class="col-lg-9">
+                        <div class="alert alert-primary" role="alert" id="result-alert">
+                            The image analyzed has a <span id="score">null</span>% probability of being malignant. This
+                            puts
+                            you in the <span class="percentile">null</span> th percentile, meaning <span
+                                class="percentile">
+                                null</span>% of images analyzed had a lower chance of being malignant.
+                            <span id="advice" class="font-weight-bold"> You should go to the doctor inmediately. </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <center>
+                            <figure class="figure" style>
+                                <img class="img-fluid rounded float-right" id="user-image">
+                                <figcaption class="figure-caption">Uploaded image.</figcaption>
+                            </figure>
+                        </center>
+                    </div>
                 </div>
             </div>
+
         </div>
 
-
-
-        <div id = "faq">
+        <div id="faq section">
             <h2>FAQ</h2>
 
             <div class="row faq-row">
@@ -203,8 +222,8 @@
 
                     <em>No.</em> While this tool can provide some guidance, it has not gone through the procedures
                     that would allow it to perform health sensitive decisions. <span class="font-weight-bold">
-                    It does not replace a doctor and if you have any reason to suspect the skin lesion could be an 
-                    issue you should go see a specialist regardless of what the AI might say. </span> 
+                        It does not replace a doctor and if you have any reason to suspect the skin lesion could be an
+                        issue you should go see a specialist regardless of what the AI might say. </span>
 
                 </div>
             </div>
@@ -213,10 +232,13 @@
                 <div class="col-lg-12">
                     <h5>How should I take the picture?</h5>
 
-                    Since the model was trained on <a href="https://www.kaggle.com/c/siim-isic-melanoma-classification/data">
-                        this data </a>, the more the input images look like them the more accurate the model will be. This means
-                        taking the photo from a centimeter or two at most, in a well lit condition, with a high quality camera and
-                        trying to make the image in-focus as much as possible.
+                    Since the model was trained on <a
+                        href="https://www.kaggle.com/c/siim-isic-melanoma-classification/data">
+                        this data </a>, the more the input images look like them the more accurate the model will be.
+                    This means
+                    taking the photo from a centimeter or two at most, in a well lit condition, with a high quality
+                    camera and
+                    trying to make the image in-focus as much as possible.
 
                 </div>
             </div>
@@ -225,10 +247,13 @@
                 <div class="col-lg-12">
                     <h5>How was this model trained?</h5>
 
-                    It was trained using more than 25000 cases from the <a href="https://challenge2020.isic-archive.com/">
-                    SIIM-ISIC Melanoma Classification Challenge</a>. If you want to take a look at what the training process 
-                    looks like, we encourage you to take a look at <a href = "https://github.com/andresarpi3/melanoma-detection">
-                    the repository of the project</a>.
+                    It was trained using more than 25000 cases from the <a
+                        href="https://challenge2020.isic-archive.com/">
+                        SIIM-ISIC Melanoma Classification Challenge</a>. If you want to take a look at what the training
+                    process
+                    looks like, we encourage you to take a look at <a
+                        href="https://github.com/andresarpi3/melanoma-detection">
+                        the repository of the project</a>.
 
                 </div>
             </div>
@@ -237,12 +262,18 @@
                 <div class="col-lg-12">
                     <h5>How accurate the model is?</h5>
 
-                    This is more complex question than what it seems. The most usual metric used in classification problems
-                    is <em>precision</em>, which just takes the correct results divided by the total results. There we are getting
-                    over 99% but it's meaningless result as over 98% of instances are negative/non maligant. A classifier that
-                    said <em>negative</em> for every input would achieve similar results. A better way to measure how well the model
-                    is doing is through <a href = "https://en.wikipedia.org/wiki/Sensitivity_and_specificity">sensitivity and 
-                    specificity</a>. There we are getting 80.56% and 78.77% respectively if we set the positive threshold at 
+                    This is more complex question than what it seems. The most usual metric used in classification
+                    problems
+                    is <em>precision</em>, which just takes the correct results divided by the total results. There we
+                    are getting
+                    over 99% but it's meaningless result as over 98% of instances are negative/non maligant. A
+                    classifier that
+                    said <em>negative</em> for every input would achieve similar results. A better way to measure how
+                    well the model
+                    is doing is through <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity">sensitivity
+                        and
+                        specificity</a>. There we are getting 80.56% and 78.77% respectively if we set the positive
+                    threshold at
                     2.23%.
 
                 </div>
@@ -255,13 +286,18 @@
                     Absolutely not. If you are not mathematically inclined, just know that even if you got a high score,
                     the probability that you have a malignant lesion is low. Still, go to the doctor.<br><br>
                     A sensitivity of 80%
-                    means that provided the person has a malignant tumor, there's an 80% chance the test will output positive.
-                    In mathematical terms: P(test being positive | person is positive) =  P(PT | PP) = 80%. But this is not at all what
-                    we are interested in, in fact it's the reverse. What we care about is the probability that the person positive
+                    means that provided the person has a malignant tumor, there's an 80% chance the test will output
+                    positive.
+                    In mathematical terms: P(test being positive | person is positive) = P(PT | PP) = 80%. But this is
+                    not at all what
+                    we are interested in, in fact it's the reverse. What we care about is the probability that the
+                    person positive
                     if the test came out positive: P(PP | PT). <br><br>
 
-                    Thanks to Bayes theorem we can rewrite the second in terms of the first one: P(PP | PT) = P(PT | PP) * P(PP) / P(PT).
-                    This result comes at around 3%. However, since the benefit of an early detection compared to the hassle of a trip
+                    Thanks to Bayes theorem we can rewrite the second in terms of the first one: P(PP | PT) = P(PT | PP)
+                    * P(PP) / P(PT).
+                    This result comes at around 3%. However, since the benefit of an early detection compared to the
+                    hassle of a trip
                     to the dermatologist is so great, we shouldn't be dismisive of the final number.
                 </div>
             </div>
@@ -269,12 +305,12 @@
 
         </div>
 
-        <div id = "contact">
+        <div id="contact section">
             <h2>Conctact</h2>
             If you have any other doubts regarding the project, don't hesitate to write me at andresarpi3@gmail.com
-        
+
         </div>
-        
+
 
 
         <script src="index.js"></script>
