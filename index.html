@@ -196,7 +196,7 @@
                             you in the <span class="percentile">null</span> th percentile, meaning <span
                                 class="percentile">
                                 null</span>% of images analyzed had a lower chance of being malignant.
-                            <span id="advice" class="font-weight-bold"> You should go to the doctor inmediately. </span>
+                            <span id="advice" class="font-weight-bold"> You should see to the doctor inmediately. </span>
                         </div>
                     </div>
 
@@ -223,7 +223,7 @@
                     <em>No.</em> While this tool can provide some guidance, it has not gone through the procedures
                     that would allow it to perform health sensitive decisions. <span class="font-weight-bold">
                         It does not replace a doctor and if you have any reason to suspect the skin lesion could be an
-                        issue you should go see a specialist regardless of what the AI might say. </span>
+                        issue you should see a specialist regardless of what the AI might say. </span>
 
                 </div>
             </div>
@@ -262,19 +262,15 @@
                 <div class="col-lg-12">
                     <h5>How accurate the model is?</h5>
 
-                    This is more complex question than what it seems. The most usual metric used in classification
-                    problems
-                    is <em>precision</em>, which just takes the correct results divided by the total results. There we
-                    are getting
-                    over 99% but it's meaningless result as over 98% of instances are negative/non maligant. A
-                    classifier that
-                    said <em>negative</em> for every input would achieve similar results. A better way to measure how
-                    well the model
-                    is doing is through <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity">sensitivity
-                        and
-                        specificity</a>. There we are getting 80.56% and 78.77% respectively if we set the positive
-                    threshold at
-                    2.23%.
+                    The most usual metric used in classification problems is <em>accuracy</em>, which divides correct 
+                    results divided by the total results. Our model has a accuracy of 99%. However, as 98% of instances
+                    are negative, this metric is not useful. (The model could always return negative the predicted label
+                    and get 98% accuracy).<br>
+                    
+                    Therefore,  
+                    <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity">sensitivity and specificity</a>
+                    are better metrics to asses the usefulness of the model. We are getting 80.56% and 78.77% respectively
+                    if we set the positive threshold at 2.23%.
 
                 </div>
             </div>
