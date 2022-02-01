@@ -224,7 +224,7 @@ function warmUp(){
 
 
     x = p.catch((response) => {
-        console.log("Problem with warmup: " + response.json());
+        console.log("Problem with warmup: " + response);
     })
 
     x.then((data) => scheduleWarmUp(data));
