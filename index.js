@@ -70,7 +70,7 @@ function buildParams(filekey) {
 
 function getColorAndAlert(percentile){
     if (percentile < 75){
-        return {"class": "alert alert-success", "text": "You are at a low risk seeting. You should see a doctor if you \
+        return {"class": "alert alert-success", "text": "You are at a low risk setting. You should see a doctor if you \
          have any other reason that might present risks (family history, pain, physical ailments, etc)."}
     } else if (percentile < 95){
         return {"class": "alert alert-warning", "text": "You are at a medium risk setting. You should consider seeing a \
@@ -118,16 +118,11 @@ function handleFileUploaded(filekey) {
 
     let r = fetch(endpoint, {
         method: "GET"
-    })
-    
-    r.then((response) => {
+    }).then((response) => {
             return response.json();
         }).then((data) => {
             handleReturnFromApiCall(data);
-        })
-        
-        
-    r.catch((err) => {
+        }).catch((err) => {
             handleFailureApi(err)
         });
 }
@@ -135,7 +130,6 @@ function handleFileUploaded(filekey) {
 function uploadFile() {
     let file = document.getElementById("formFile").files[0]
     var fileName = file.name;
-    document.getElementById("user-image").src = fileName;
 
     var photoKey = Math.floor(Date.now() / 1000) + "_" + fileName;
 
